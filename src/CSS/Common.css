@@ -1,0 +1,65 @@
+@font-face {
+    font-family: "BMHANNAAir";
+    src: url("../Resource/BMHANNAAir_ttf.ttf");
+}
+
+@font-face {
+    font-family: "BMHANNA11yrs";
+    src: url("../Resource/BMHANNA_11yrs_ttf.ttf");
+}
+
+.LeftOffset {
+    width:320px;
+    height:100%;
+    float:left;
+}
+
+.HeaderContainer .LeftOffset {
+    width:550px;
+    height:100%;
+    float:left;
+}
+
+.VerticalLine {
+    border-right: thick solid #a39393;
+    width: 5px;
+    height:100%;
+    position:absolute;
+    left:320px;
+    float: left;
+}
+
+.RightContainer {
+    float:left;
+    color:white;
+}
+.AboutContainer .RightContainer {
+    margin-top:110px;
+}
+
+.ContentsHeaderContainer {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    z-index: 1;
+}
+
+.TitleHeader {
+    float:left;
+    height:30px;
+    width: 15px;
+    background-color: rgb(112, 98, 98);
+    z-index: 1;
+}
+
+.Title {
+    float: left;
+    height: 100%;
+    margin-left:20px;
+    font-family: "BMHANNAAir";
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    z-index: 1;
+}

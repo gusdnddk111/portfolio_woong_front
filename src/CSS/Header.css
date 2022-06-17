@@ -1,0 +1,83 @@
+@font-face {
+    font-family: "BMHANNAAir";
+    src: url("../Resource/BMHANNAAir_ttf.ttf");
+}
+
+@font-face {
+    font-family: "BMHANNA11yrs";
+    src: url("../Resource/BMHANNA_11yrs_ttf.ttf");
+}
+
+.HeaderContainer {
+    background-image: url('../image/HeaderBackground.jfif');
+    background-size: cover;
+    opacity: 0.7;
+}
+
+.profileImageContainer {
+    width: 280px;
+    height: 280px; 
+    position:absolute;
+    left:180px;
+    top:180px;
+    z-index: 1;
+}
+
+.profileImage {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
+    z-index: 1;
+}
+
+.ProfileName {
+    font-family: "BMHANNAAir";
+    font-size: 70px;
+    vertical-align: bottom;
+    margin-top: 180px;
+    width: 1000px;
+}
+
+.ProfileJob {
+    font-family: "BMHANNA11yrs";
+    font-size: 40px;
+    margin-top: 20px;
+    height:40px;
+    width: 1000px;
+}
+
+.ProfileContact {
+    float: left;
+    font-family: "BMHANNA11yrs";
+    font-size: 17px;
+    margin-top: 35px;
+    height:20px;
+    width: 1000px;
+    transition: opacity 1s 0s;
+    opacity:1;
+}
+
+.ProfileContactHide {
+    float: left;
+    font-family: "BMHANNA11yrs";
+    font-size: 17px;
+    margin-top: 35px;
+    height:20px;
+    width: 1000px;
+    opacity:0;
+}
+
+.ProfileContactIcon {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+    filter: invert(100%);
+}
+
+.ProfileContactSpan {
+    float: left;
+    line-height: 35px;
+    margin-right: 80px;
+    vertical-align: middle;
+}
