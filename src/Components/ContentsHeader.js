@@ -9,8 +9,8 @@ const ContentsHeader = (props) => {
         <div className="ContentsHeaderContainer">
             <div className="TitleHeader"/>
             <div className="Title">
-                <span style={{color:'#d81b1b', fontSize:'70px'}}>{contents.substr(0,1)}</span>
-                <span style={{color:'#494040', paddingTop:'20px', fontSize:'40px'}}>{contents.substr(1,contents.length)}</span>
+                <span className="TitleHeaderContentsFirst">{contents.substr(0,1)}</span>
+                <span className="TitleHeaderContentsLast">{contents.substr(1,contents.length)}</span>
             </div>
         </div>
     );

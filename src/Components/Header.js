@@ -54,7 +54,7 @@ const Header = () => {
                         <Typing
                             Tag='span'
                             preDelay={100}
-                            postDelay={1000}
+                            postDelay={100}
                             speed={40}
                             cursor
                             fixedWidth={false}
