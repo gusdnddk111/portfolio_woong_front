@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { actions, getState } from '../state/mainSlice';
-import Header from './Header';
-import About from './About';
-import Projects from './Projects';
+import React from 'react';
+import HeaderMain from './HeaderMain';
+import ProjectsMain from './ProjectsMain';
+import BaseLayout from './BaseLayout';
+import AboutMain from './AboutMain';
 
 const PortfolioMain = () => {
-  const count = useSelector((state) => getState(state).value);
-  const dispatch = useDispatch();
-
+  
   return (
     <>
-      <Header/>
-      <About/>
-      <Projects/>
+      <HeaderMain/>
+      <BaseLayout title="About Me" contents={<AboutMain/>}/>
+      <BaseLayout title="ccccc" contents={<ProjectsMain/>}/>
+      
     </>
   );
 }

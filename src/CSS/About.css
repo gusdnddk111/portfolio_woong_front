@@ -13,17 +13,11 @@
     src: url("../../public/Resource/RixModernL.ttf");
 }
 
-
-.Contents {
-    color: #494040;
-    padding-left: 100px;
-    padding-top: 20px;
-    font-size:14px;
-    font-family: "RixModernL";
-    font-weight: 700;
-}
-
 .Sentence {
     display: inline-block;
     height:30px;
+    font-family: "RixModernL";
+    font-weight: 700;
+    font-size:14px;
+    color: #494040;
 }

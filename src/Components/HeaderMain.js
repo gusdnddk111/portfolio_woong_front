@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef  } from 'react';
 import SuperEllipse from "react-superellipse";
 import profileImage from '../image/profileImage.jfif';
-import ProfileContact from './ProfileContact'
+import HeaderProfileContact from './HeaderProfileContact'
 import HeaderCss from '../CSS/Header.css';
 import CommonCss from '../CSS/Common.css';
 import Typing from 'react-kr-typing-anim';
@@ -10,7 +10,7 @@ import phoneIcon from '../image/phoneCall.png';
 import mailIcon from '../image/mail.png';
 import githubIcon from '../image/github.png';
 
-const Header = () => {
+const HeaderMain = () => {
     const [isErase, setIsErase] = useState(false);
     const [isNameEnd, setIsNameEnd] = useState(false);
     const [isJobEnd, setIsJobEnd] = useState(false);
@@ -64,9 +64,9 @@ const Header = () => {
                         }
                     </div>
                     <div className={profileContactClassName} ref={profileContact}>
-                        <ProfileContact image={phoneIcon} content={'010-3549-9453'}/>
-                        <ProfileContact image={mailIcon} content={'gusdnddk111@gmail.com'}/>
-                        <ProfileContact image={githubIcon} content={'https://github.com/gusdnddk111'}/>    
+                        <HeaderProfileContact image={phoneIcon} content={'010-3549-9453'}/>
+                        <HeaderProfileContact image={mailIcon} content={'gusdnddk111@gmail.com'}/>
+                        <HeaderProfileContact image={githubIcon} content={'https://github.com/gusdnddk111'}/>    
                     </div>
                 </div>
             </div> 
@@ -77,4 +77,4 @@ const Header = () => {
     );
 }
 
-export default Header;
+export default HeaderMain;

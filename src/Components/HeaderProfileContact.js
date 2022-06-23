@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import HeaderCss from '../CSS/Header.css';
 
-const ProfileContact = (props) => {
+const HeaderProfileContact = (props) => {
     const content = props.content;
     const image = props.image;
     const isHref = content.startsWith("http");
@@ -21,10 +21,8 @@ const ProfileContact = (props) => {
                 {content}
             </span>
             }
-            
-            
         </>
     );
 }
 
-export default ProfileContact;
+export default HeaderProfileContact;

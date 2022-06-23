@@ -16,32 +16,34 @@
 .BaseContainer {
     background-color: rgb(250, 250, 250);
     min-width: 1600px;
+    display: flex;
+    overflow: auto;
 }
 
 .LeftOffset {
     width:320px;
-    height:100%;
-    float:left;
+    min-width: 30px;
 }
 
 .VerticalLine {
     border-right: thick solid #a39393;
     height:100%;
-    float: left;
+    width:100%;
 }
 
 .RightContainer {
     float:left;
     color:white;
     height:fit-content;
+    width: fit-content;
     min-width:1000px;
 }
 
 .BaseContainer .RightContainer {
-    margin-top:120px;
+    padding-top:120px;
 }
 
-.ContentsHeaderContainer {
+.TitleHeaderContainer {
     height: 100px;
     display: flex;
     align-items: center;
@@ -54,16 +56,21 @@
     height:30px;
     width: 15px;
     background-color: rgb(112, 98, 98);
-    position:absolute;
-    left:315px;
+    position:relative;
+    left:-5px;
     z-index: 1;
+}
+
+.Contents {
+    padding-left: 100px;
+    padding-top: 20px;
+    height:fit-content;
 }
 
 .Title {
     float: left;
     height: 100%;
     margin-left:20px;
-    font-family: "RixLightEB";
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -72,11 +79,13 @@
 
 .TitleHeaderContentsFirst {
     color:#d81b1b;
+    font-family: "RixLightEB";
     font-size: 70px;
 }
 
 .TitleHeaderContentsLast {
     color:#494040;
+    font-family: "RixLightEB";
     padding-top: 20px;
     font-size: 40px;
 }
