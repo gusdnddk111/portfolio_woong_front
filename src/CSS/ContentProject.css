@@ -1,0 +1,121 @@
+@font-face {
+    font-family: "RixModernL";
+    src: url("../../public/Resource/RixModernL.ttf");
+}
+
+@font-face {
+    font-family: "RixLightEB";
+    src: url("../../public/Resource/RixLightEB.ttf");
+}
+
+@font-face {
+    font-family: "RixLightM";
+    src: url("../../public/Resource/RixLightM.ttf");
+}
+
+.ProjectContainer {
+    height:fit-content;
+
+    float:left;
+    position: relative;
+    font-family: "RixModernL";
+}
+
+.TimeLine {
+    height: 100%;
+
+    border-left: 3px dashed #a39393;
+    float:left;
+    position:absolute;
+    z-index: 0;    
+    left: 8px;
+    overflow:auto;
+}
+
+.ContentHeaderContainer {
+    
+    margin-top: 50px;
+
+    width: fit-content;
+
+    display:block;
+    overflow-x:auto;
+    z-index: 1;
+}
+
+.ContentHeaderIcon {
+    width: 10px;
+    height:10px;
+    
+    float:left;
+    border-radius: 50%;
+    border-color: rgb(255, 179, 80);
+    border-style: solid;
+    border-width: 4px;
+    background-color: rgb(255, 255, 255);
+    position:relative;
+    z-index: 1;
+}
+
+.ContentHeaderTitle{
+    font-family: "RixLightM";
+    font-size: 18px;
+    font-weight: 600;
+    
+    margin-left:20px;
+
+    width:fit-content;
+    height: fit-content;    
+
+    float: left;
+    display: inline;
+    align-items: center;
+    flex-direction: row;
+    color: #494040;
+}
+
+.ContentHeaderSubTitle{
+    font-family: "RixLightM";
+    font-size:12px;
+    font-weight: 600;
+
+    margin-left:10px;
+    margin-top: 6px;
+
+    width:fit-content;
+    height: fit-content;
+
+    float: left;
+    display: inline;
+    align-items: center;
+    flex-direction: row;
+    color: #494040;
+}
+
+.ContentHeaderDropdownIcon {
+    margin-left:10px;
+
+    width:20px;
+    height:20px;
+
+    float: left;
+    align-items: center;
+    flex-direction: row;
+}
+
+.ContentBodyContainer {
+    font-size:14px;
+    font-weight: 600;
+
+    margin-top: 10px;
+    margin-left: 30px;
+    padding: 15px;
+
+    width: 850px;
+    min-width: 850px;
+
+    display:block;
+    overflow-x:auto;
+    background-color: #ffffff77;
+    color: #494040;
+}

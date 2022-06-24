@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import AboutCss from '../CSS/About.css';
-import CommonCss from '../CSS/Common.css';
+import React from 'react';
+import '../CSS/Common.css';
 
 const TitleHeader = (props) => {
     const content = props.content;

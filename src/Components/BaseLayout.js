@@ -1,11 +1,11 @@
 import React from 'react';
-import CommonCss from '../CSS/Common.css';
-import TitleHeader from './TitleHeader';
+import '../CSS/Common.css';
+import ContentTitle from './ContentTitle';
 
 const BaseLayout = (props) => {
     const contents = props.contents;
     const title = props.title;
-    console.log(contents)
+
     return (
         <>
             <div className="BaseContainer">
@@ -13,7 +13,7 @@ const BaseLayout = (props) => {
                     <div className="VerticalLine"/>
                 </div>
                 <div className="RightContainer">
-                    <TitleHeader content={title}/>
+                    <ContentTitle content={title}/>
                     <div className="Contents">
                         {contents}
                     </div>

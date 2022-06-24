@@ -9,8 +9,8 @@
 }
 
 @font-face {
-    font-family: "RixModernL";
-    src: url("../../public/Resource/RixModernL.ttf");
+    font-family: "RixLightM";
+    src: url("../../public/Resource/RixLightM.ttf");
 }
 
 .BaseContainer {

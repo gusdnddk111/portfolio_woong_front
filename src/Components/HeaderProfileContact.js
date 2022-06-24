@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderCss from '../CSS/Header.css';
+import '../CSS/Header.css';
 
 const HeaderProfileContact = (props) => {
     const content = props.content;
@@ -8,7 +8,7 @@ const HeaderProfileContact = (props) => {
     
     return (
         <>
-            <img className='ProfileContactIcon' src={image}>
+            <img alt="" className='ProfileContactIcon' src={image}>
             </img>
             {isHref?
                 <a href={content} style={{color:'white'}}>
