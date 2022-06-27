@@ -109,13 +109,16 @@
 
     margin-top: 10px;
     margin-left: 30px;
-    padding: 15px;
 
     width: 850px;
     min-width: 850px;
 
     display:block;
-    overflow-x:auto;
+    overflow:hidden;
     background-color: #ffffff77;
     color: #494040;
+}
+
+.ContentBodyOrderButtonContainer {
+    float: right;
 }

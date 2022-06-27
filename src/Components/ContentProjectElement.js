@@ -6,13 +6,12 @@ import ContentProjectBody from './ContentProjectBody';
 
 const ContentProjectElement = (props) => {
     const dropdown = props.dropdown ? props.dropdown : false;
-    
+    const dropdownAnimDelay = ".5s";
     const imgRef = useRef(null);
     const bodyRef = useRef(null);
     const [isDropdowned, setIsDropdowned] = useState(true);
 
     const onClick = () => {
-        console.log(dropdown)
         if(dropdown){
             if(isDropdowned){
                 setIsDropdowned(false);
@@ -25,9 +24,15 @@ const ContentProjectElement = (props) => {
     useEffect(() => {
         if(dropdown){
             if(isDropdowned){
-                imgRef.current.style.transform = "0deg";
+                imgRef.current.style.transform = "scaleY(1)";
+                bodyRef.current.style.padding="15px 15px"
+                bodyRef.current.style.maxHeight= "1500px";
+                bodyRef.current.style.transition="max-height " + dropdownAnimDelay + " ease-in-out, padding .5s ease-in-out";
             }else{
-                imgRef.current.style.transform = "90deg";
+                imgRef.current.style.transform = "scaleY(-1)";
+                bodyRef.current.style.padding="0px 15px";
+                bodyRef.current.style.maxHeight="0px";
+                bodyRef.current.style.transition="max-height " + dropdownAnimDelay + " ease-in-out, padding .5s ease-in-out";
             }
         }
     }, [isDropdowned])
@@ -42,7 +47,7 @@ const ContentProjectElement = (props) => {
                 imgRef={imgRef}
                 onClick={onClick}
             />
-            <ContentProjectBody id={props.id}/> 
+            <ContentProjectBody id={props.id} bodyRef={bodyRef}/> 
         </>
     );
 }
