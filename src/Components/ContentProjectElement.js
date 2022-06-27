@@ -3,6 +3,7 @@ import '../CSS/ContentProject.css';
 import '../CSS/Common.css';
 import ContentProjectHeader from './ContentProjectHeader';
 import ContentProjectBody from './ContentProjectBody';
+import 'semantic-ui-css/semantic.min.css';
 
 const ContentProjectElement = (props) => {
     const dropdown = props.dropdown ? props.dropdown : false;
@@ -27,15 +28,15 @@ const ContentProjectElement = (props) => {
                 imgRef.current.style.transform = "scaleY(1)";
                 bodyRef.current.style.padding="15px 15px"
                 bodyRef.current.style.maxHeight= "1500px";
-                bodyRef.current.style.transition="max-height " + dropdownAnimDelay + " ease-in-out, padding .5s ease-in-out";
+                bodyRef.current.style.transition="max-height " + dropdownAnimDelay + " ease-out, padding .5s ease-out";
             }else{
                 imgRef.current.style.transform = "scaleY(-1)";
                 bodyRef.current.style.padding="0px 15px";
                 bodyRef.current.style.maxHeight="0px";
-                bodyRef.current.style.transition="max-height " + dropdownAnimDelay + " ease-in-out, padding .5s ease-in-out";
+                bodyRef.current.style.transition="max-height " + dropdownAnimDelay + " ease-out, padding .5s ease-out";
             }
         }
-    }, [isDropdowned])
+    }, [dropdown, isDropdowned])
 
     return (
         <> 
@@ -47,7 +48,7 @@ const ContentProjectElement = (props) => {
                 imgRef={imgRef}
                 onClick={onClick}
             />
-            <ContentProjectBody id={props.id} bodyRef={bodyRef}/> 
+            <ContentProjectBody id={props.id} bodyRef={bodyRef} dropdown={dropdown}/> 
         </>
     );
 }

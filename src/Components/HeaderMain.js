@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef  } from 'react';
 import SuperEllipse from "react-superellipse";
 import profileImage from '../image/profileImage.jfif';
 import HeaderProfileContact from './HeaderProfileContact'
-import HeaderCss from '../CSS/Header.css';
-import CommonCss from '../CSS/Common.css';
+import '../CSS/Header.css';
+import '../CSS/Common.css';
 import Typing from 'react-kr-typing-anim';
 import TypeMe, { Delete } from 'react-typeme';
 import phoneIcon from '../image/phoneCall.png';
@@ -71,7 +71,7 @@ const HeaderMain = () => {
                 </div>
             </div> 
             <SuperEllipse className="profileImageContainer" r1={0.14} r2={0.5}>
-                <img className="profileImage" src={profileImage}/>
+                <img className="profileImage" src={profileImage} alt=""/>
             </SuperEllipse>
         </>
     );

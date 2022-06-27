@@ -1,18 +1,22 @@
 import React from 'react';
 import '../CSS/ContentProject.css';
 import { Button } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+//import 'semantic-ui-css/semantic.min.css';
+import { Icon } from 'semantic-ui-react';
+
 
 const ProjectsContentBody = (props) => {
-     
-    return (
+    const dropdown = props.dropdown;
+
+    return (<>
+        {dropdown && (
         <div className='ContentBodyContainer' ref={props.bodyRef}>
             <div className="ContentBodyOrderButtonContainer">
-                <Button.Group style={{float:"right"}} basic size='small'>
-                    <Button style={{width:"15px", height:"15px"}} icon='save' />
-                    <Button style={{width:"15px", height:"15px"}} icon='save' />
-                </Button.Group>
                 <Button style={{float:"right"}} icon='sort numeric down' />
+                <Button.Group style={{float:"right"}} basic size='small'>
+                    <Button icon='save' />
+                    <Button icon='save' />
+                </Button.Group>
             </div>
             <span>asdfsdfsdfsdfsdfsdfsdf</span><br/>
             <span>asdfsdfsdfsdfsdfsdfsdf</span><br/>
@@ -21,6 +25,8 @@ const ProjectsContentBody = (props) => {
             <span>asdfsdfsdfsdfsdfsdfsdf</span><br/>
             <span>assssssssssssssssssssssssssss</span>
         </div>
+        )}
+        </>
     );
 }
 
