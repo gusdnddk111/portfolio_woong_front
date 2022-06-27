@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 const ProjectsContentBody = (props) => {
-    
+     
     return (
         <div className='ContentBodyContainer' ref={props.bodyRef}>
             <div className="ContentBodyOrderButtonContainer">
