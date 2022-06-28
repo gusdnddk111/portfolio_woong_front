@@ -44,8 +44,8 @@
 }
 
 .ContentHeaderIcon {
-    width: 10px;
-    height:10px;
+    width: 18px;
+    height:18px;
     
     float:left;
     border-radius: 50%;
@@ -59,8 +59,8 @@
 
 .ContentHeaderTitle{
     font-family: "RixLightM";
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 1000;
     
     margin-left:20px;
 
@@ -80,7 +80,7 @@
     font-weight: 600;
 
     margin-left:10px;
-    margin-top: 6px;
+    margin-top: 2px;
 
     width:fit-content;
     height: fit-content;
@@ -104,21 +104,63 @@
 }
 
 .ContentBodyContainer {
+    
     font-size:14px;
-    font-weight: 600;
+    font-weight: 1000;
 
     margin-top: 10px;
     margin-left: 30px;
-
+    padding: 0px 15px;
     width: 850px;
     min-width: 850px;
 
     display:block;
     overflow:hidden;
-    background-color: #ffffff77;
     color: #494040;
 }
 
 .ContentBodyOrderButtonContainer {
     float: right;
+}
+
+.ContentProjectBodyTitle {
+    font-size: 16px;
+    font-family: "RixLightM";
+}
+
+.ContentProjectBodySubTitle {
+    margin: 4px 0px 0px 8px;
+    font-size: 12px;
+}
+
+.ContentProjectBodySentenceContainer {
+    margin: 16px 0px 32px 36px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.ContentProjectBodySentence {
+    margin-bottom: 4px;
+    width:100%;
+    height: fit-content;
+    display: inline-flex;
+}
+
+.SentenceDepth1 {
+    padding: 4px 0px 4px 4px;
+}
+
+.SentenceDepth2 {
+    padding-left: 28px;
+    padding-top: 4px;
+}
+
+.SentenceDepth3 {
+    padding-left: 40px;
+    padding-top: 4px;
+}
+
+.SentenceDepth4 {
+    padding-left: 60px;
+    
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import HeaderMain from './HeaderMain';
-import ContentProject from './ContentProject';
+import HeaderMain from './Header/HeaderMain';
+import ContentProject from './ContentBody/ContentProject';
 import BaseLayout from './BaseLayout';
-import ContentAbout from './ContentAbout';
+import ContentAbout from './ContentAbout/ContentAbout';
 
 const PortfolioMain = () => {
   
