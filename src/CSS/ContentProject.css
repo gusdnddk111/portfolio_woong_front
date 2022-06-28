@@ -134,25 +134,25 @@
 }
 
 .ContentProjectBodySentenceContainer {
-    margin: 16px 0px 32px 36px;
+    margin: 16px 0px 60px 36px;
     font-weight: 600;
     font-size: 13px;
 }
 
 .ContentProjectBodySentence {
-    margin-bottom: 4px;
+    
     width:100%;
     height: fit-content;
     display: inline-flex;
 }
 
 .SentenceDepth1 {
-    padding: 4px 0px 4px 4px;
+    padding: 16px 0px 4px 4px;
 }
 
 .SentenceDepth2 {
     padding-left: 28px;
-    padding-top: 4px;
+    padding-top: 8px;
 }
 
 .SentenceDepth3 {
