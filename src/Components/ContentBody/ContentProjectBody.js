@@ -9,10 +9,16 @@ import ContentProjectBodyContent from './ContentProjectBodyContent';
 const ProjectsContentBody = (props) => {
     const dropdown = props.dropdown;
     const data1 = [
-        {title:"SK매직 차세대 프로젝트"
-         , subTitle:"(2021.12 ~ 현재)", developLanguage:"Java, JavaScript", developFramework: "React.js, Spring, myBatis, mysql"
-        , tasks: {role:"Application Developer", task1:}
-        
+        {title:"SK매직 차세대 프로젝트",
+         subTitle:"(2021.12 ~ 현재)",
+         developLanguage:"Java, JavaScript",
+         developFramework: "React.js, Spring, myBatis, mysql"
+        , tasks: [{role:"Application Developer", task1: "공통기능 모듈 개발", task2:"MSA간 보상트랜잭션 관리 모듈 개발 (Spring AOP)"},
+                  {role:"Application Developer", task1: "Back-end 개발", task2:"렌탈계약변경 로직 개발 (Spring)"},
+                  {role:"Application Developer", task1: "Back-end 개발", task2:"렌탈계약변경 배치 개발 (Spring Batch)"},
+                  {role:"Application Developer", task1: "Front-end 개발", task2:"렌탈계약관리 화면 개발 (React.js)"},
+                  {role:"Application Developer", task1: "Front-end 개발", task2:"개인수집동의관리 화면 개발 (React.js)"},
+                ]
         }
     ];
 
@@ -22,6 +28,7 @@ const ProjectsContentBody = (props) => {
                 <Grid>
                     <Grid.Column>
                         <Segment raised>
+                            
                             <ContentProjectBodyTitle ribbon={true} title="SK매직 차세대 프로젝트" subTitle="(2021.12 ~ 현재)"/>
                             <div className="ContentProjectBodySentenceContainer">
                                 <ContentProjectBodyContent 
