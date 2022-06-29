@@ -8,6 +8,7 @@ import ContentProjectBodyContent from './ContentProjectBodyContent';
 
 const ProjectsContentBody = (props) => {
     const dropdown = props.dropdown;
+    const data = props.data;
     const data1 = [
         {title:"SK매직 차세대 프로젝트",
          subTitle:"(2021.12 ~ 현재)",
@@ -42,7 +43,7 @@ const ProjectsContentBody = (props) => {
             htmlBodyTag += <ContentProjectBodyContent depth="1" iconName="chevron right" content="수행 내용"/>;
 
             for(let tasks of projectObj.tasks){
-                htmlBodyTag += <ContentProjectBodyContent depth="2" style={{color:"rgb(33 139 247)"}} content={"[ "+tasks.role+" ]"}/>;
+                htmlBodyTag += <ContentProjectBodyContent depth="2" contentStyle={{color:"rgb(33 139 247)"}} content={"[ "+tasks.role+" ]"}/>;
                 for(let task of tasks.task){
                     htmlBodyTag += <ContentProjectBodyContent depth="3" iconName="chevron right" content={task.taskName}/>;
                     for(let taskContent of task.taskContent){
@@ -55,7 +56,7 @@ const ProjectsContentBody = (props) => {
             htmlTag += <div className="ContentProjectBodySentenceContainer">{htmlBodyTag}</div>;
         }
         console.log(htmlTag)
-        return htmlTag
+        return htmlHeadTag
     }
 
 
@@ -65,6 +66,7 @@ const ProjectsContentBody = (props) => {
                 <Grid>
                     <Grid.Column>
                         <Segment raised>
+                            {createHtmlTag(data1)}
                             <ContentProjectBodyTitle ribbon={true} title="SK매직 차세대 프로젝트" subTitle="(2021.12 ~ 현재)"/>
                             <div className="ContentProjectBodySentenceContainer">
                                 <ContentProjectBodyContent 
@@ -74,8 +76,15 @@ const ProjectsContentBody = (props) => {
                                 />
                                 <ContentProjectBodyContent
                                     depth="2"
-                                    tags={["Java","JavaScript","Spring","React.js","myBatis","mysql"]}
+                                    tagColor="blue"
+                                    tags={["JavaScript","React.js"]}
                                 />
+                                <ContentProjectBodyContent
+                                    depth="2"
+                                    tagColor="blue"
+                                    tags={["Java","Spring","myBatis","mysql"]}
+                                />
+                                <div style={{height:"16px"}}/>
                                 <ContentProjectBodyContent 
                                     depth="1" 
                                     iconName="checkmark" 
@@ -83,12 +92,11 @@ const ProjectsContentBody = (props) => {
                                 />
                                 <ContentProjectBodyContent 
                                     depth="2" 
-                                    style={{color:"rgb(33 139 247)"}}
+                                    contentStyle={{color:"#2185d0"}}
                                     content="[ Application Developer ]"
                                 />
                                 <ContentProjectBodyContent 
                                     depth="2" 
-                                    
                                     content="- 공통기능 모듈 개발"
                                 />
                                 <ContentProjectBodyContent 
@@ -137,181 +145,396 @@ const ProjectsContentBody = (props) => {
 }
 
 /*
-WITH LANGUAGE AS (
-    SELECT A.PROJECT_ID
-         , B.LANGUAGE_NAME
-         , C.FRAMEWORK_NAME AS LIBRARY_NAME
-      FROM PROJECT_TECHNIC_LANGUAGE A
-INNER JOIN LANGUAGE_CODE B
-        ON A.LANGUAGE_ID = B.LANGUAGE_ID
-INNER JOIN DB_AND_FRAMEWORK_CODE C
-        ON A.LIBRARY_ID = C.FRAMEWORK_ID
-), FRAMEWORK AS(
-    SELECT A.PROJECT_ID
-         , B.FRAMEWORK_NAME
-         , C.FRAMEWORK_NAME AS SUBFRAMEWORK_NAME
-      FROM PROJECT_TECHNIC_FRAMEWORK A
-INNER JOIN DB_AND_FRAMEWORK_CODE B
-        ON A.FRAMEWORK_ID = B.FRAMEWORK_ID
-INNER JOIN DB_AND_FRAMEWORK_CODE C
-        ON A.SUBFRAMEWORK_ID = C.FRAMEWORK_ID
-)
-         SELECT A.TITLE
-              , CONCAT(A.FROM_DATE, ' ~ ', IFNULL(A.END_DATE, '현재'), IF(ISNULL(A.PERIOD,'',CONCAT(',',A.PERIOD,'개월')))) AS SUBTITLE
-              , B.LANGUAGE_LIST AS DEVELOP_LANGUGAE
-              , C.FRAMEWORK_LIST AS DEVELOP_FRAMEWORK
-           FROM PROJECT_LIST A
-LEFT OUTER JOIN (SELECT PROJECT_ID
-                      , GROUP_CONCAT(LANGUAGE_NAME) AS LANGUAGE_LIST
-                   FROM ( SELECT PROJECT_ID
-                               , CONCAT(LANGUAGE_NAME,LANGUAGE_LIST) AS LANGUAGE_NAME
-                            FROM ( SELECT PROJECT_ID
-                                        , LANGUAGE_NAME
-                                        , CONCAT('(', GROUP_CONCAT(LIBRARY_NAME), ')') AS LIBRARY_LIST
-                                     FROM LANGUAGE 
-                                 GROUP BY PROJECT_ID, LANGUAGE_NAME
-                                 ) X
-                        ) Y
-                GROUP BY PROJECT_ID
-                ) B
-             ON A.PROJECT_ID = B.PROJECT_ID
-LEFT OUTER JOIN (SELECT PROJECT_ID
-                      , GROUP_CONCAT(FRAMEWORK_NAME) AS FRAMEWORK_LIST
-                   FROM ( SELECT PROJECT_ID
-                               , CONCAT(FRAMEWORK_NAME,SUBFRAMEWORK_LIST) AS FRAMEWORK_NAME
-                            FROM ( SELECT PROJECT_ID
-                                        , FRAMEWORK_NAME
-                                        , CONCAT('(', GROUP_CONCAT(SUBFRAMEWORK_NAME), ')') AS SUBFRAMEWORK_LIST
-                                     FROM FRAMEWORK 
-                                 GROUP BY PROJECT_ID, SUBFRAMEWORK_NAME
-                                 ) X
-                        ) Y
-                GROUP BY PROJECT_ID
-                ) C
-             ON A.PROJECT_ID = C.PROJECT_ID
+#CREATE DATABASE PORTFOLIO;
+USE PORTFOLIO;
+DROP TABLE IF EXISTS TASK_TECHNIC;
+DROP TABLE IF EXISTS PROJECT_TASK;
+DROP TABLE IF EXISTS project_technic;
+DROP TABLE IF EXISTS PROJECT_LIST;
+DROP TABLE IF EXISTS COMPANY_LIST;
+DROP TABLE IF EXISTS PERSON_LIST;
+DROP TABLE IF EXISTS TECHNIC_CODE;
+DROP TABLE IF EXISTS ROLE_CODE;
+
+#############################################    ROLE_CODE     ##############################################
+
+CREATE TABLE ROLE_CODE(  
+    ROLE_ID INT NOT NULL AUTO_INCREMENT,  
+    ROLE_NAME_ENG VARCHAR(200),
+    ROLE_NAME_KOR VARCHAR(200),
+    PRIMARY KEY ( ROLE_ID )
+);
+
+INSERT INTO role_code (ROLE_NAME_ENG, ROLE_NAME_KOR) 
+     VALUES ('Application Developer','어플리케이션 개발자')
+	       , ('Data Engineer','데이터 엔지니어')
+			 , ('Data Analyst','데이터 분석가');
+
+SELECT * FROM PORTFOLIO.ROLE_CODE;
+
+#############################################################################################################
 
 
-*/
+############################################    TECHNIC_CODE     ############################################
+CREATE TABLE TECHNIC_CODE(  
+    TECHNIC_ID INT NOT NULL AUTO_INCREMENT,  
+    TECHNIC_NAME_ENG VARCHAR(200),
+    TECHNIC_NAME_KOR VARCHAR(200),
+    TECHNIC_DVS VARCHAR(50),
+    TAG1 VARCHAR(50),
+    TAG2 VARCHAR(50),
+    PRIMARY KEY ( TECHNIC_ID )
+);
+
+INSERT INTO TECHNIC_CODE (TECHNIC_NAME_ENG, TECHNIC_NAME_KOR, TECHNIC_DVS, TAG1, TAG2) 
+     VALUES ('Java','자바','LANGUAGE', 'BACKEND',null)
+	       , ('Java Script','자바스크립트','LANGUAGE', 'FRONTEND',null)
+			 , ('Python','파이썬','LANGUAGE','BACKEND',null)
+			 , ('Spring boot','스프링부트','FRAMEWORK','BACKEND', 'Java')
+			 , ('Spring Batch','스프링배치','FRAMEWORK','BACKEND', 'Java')
+			 , ('Android','안드로이드','FRAMEWORK','FRONTEND','Java')
+			 , ('myBatis','마이바티스','FRAMEWORK','BACKEND','Java')
+			 , ('pySpark','파이스파크','FRAMEWORK','BACKEND','Python')
+			 , ('React.js','리액트','FRAMEWORK','FRONTEND','Java Script')
+			 , ('Oozie','우지','FRAMEWORK','BACKEND','Hadoop')
+			 , ('Hive','하이브','FRAMEWORK','BACKEND','Hadoop')
+			 , ('Spark','스파크','FRAMEWORK','BACKEND','Hadoop')
+			 , ('Sqoop','스쿱','FRAMEWORK','BACKEND','Hadoop')
+			 , ('Hadoop','하둡','DB','BACKEND',null)
+			 , ('mySql','마이에스큐엘','DB','BACKEND',null)
+			 , ('scikit-learn','싸이킷런','LIBRARY','BACKEND','Python')
+			 , ('Tensorflow','텐서플로우','LIBRARY','BACKEND','Python')
+			 , ('Shap','샤프','LIBRARY','BACKEND','Python')
+			 , ('Lime','라임','LIBRARY','BACKEND','Python');
+
+
+SELECT * FROM PORTFOLIO.TECHNIC_CODE;
+#############################################################################################################
+
+
+############################################    PERSON_LIST     #############################################
+
+CREATE TABLE PERSON_LIST(  
+    PERSON_ID INT NOT NULL AUTO_INCREMENT,  
+    NAME_KOR VARCHAR(20),
+    JOB VARCHAR(200),
+    PHONE_NUMBER VARCHAR(20),
+    EMAIL_ADDRESS VARCHAR(50),
+    GITHUB_ADDRESS VARCHAR(200),
+    PRIMARY KEY ( PERSON_ID )
+);
+
+INSERT INTO PERSON_LIST (NAME_KOR, JOB, PHONE_NUMBER, EMAIL_ADDRESS, GITHUB_ADDRESS) 
+     VALUES ('조현웅','SK C&C 데이터 엔지니어', '010-3549-9453', 'gusdnddk111@gmail.com', 'https://github.com/gusdnddk111');
+
+SELECT * FROM PORTFOLIO.PERSON_LIST;
+
+#############################################################################################################
+
+
+############################################    COMPANY_LIST     ############################################
+
+CREATE TABLE COMPANY_LIST(
+    COMPANY_ID INT NOT NULL AUTO_INCREMENT,  
+    PERSON_ID INT NOT NULL,
+    COMPANY_NAME VARCHAR(200) NOT NULL,
+    FROM_DATE VARCHAR(10) NOT NULL,
+    END_DATE VARCHAR(10),
+    PRIMARY KEY ( COMPANY_ID ),
+    FOREIGN KEY ( PERSON_ID ) REFERENCES PERSON_LIST(PERSON_ID)
+);
+
+INSERT INTO COMPANY_LIST (PERSON_ID, COMPANY_NAME, FROM_DATE, END_DATE) 
+     VALUES (1, '아주대학교', '201203', '201802')
+	       , (1, 'SK C&C', '201801', null);
+	       
+SELECT * FROM PORTFOLIO.COMPANY_LIST;
+
+#############################################################################################################
+	       
+	       
+############################################    PROJECT_LIST     ############################################
+CREATE TABLE PROJECT_LIST(
+    PROJECT_ID INT NOT NULL AUTO_INCREMENT,  
+    COMPANY_ID INT NOT NULL,
+    PROJECT_NAME VARCHAR(200) NOT NULL,
+    FROM_DATE VARCHAR(10) NOT NULL,
+    END_DATE VARCHAR(10),
+    PERIOD INT,
+    GITHUB_ADDRESS VARCHAR(200),
+    PRIMARY KEY ( PROJECT_ID ),
+    FOREIGN KEY ( COMPANY_ID ) REFERENCES COMPANY_LIST(COMPANY_ID)
+);
+
+INSERT INTO PROJECT_LIST (COMPANY_ID, PROJECT_NAME, FROM_DATE, END_DATE, PERIOD, GITHUB_ADDRESS) 
+     VALUES (2, '우리은행 AI-OCR을 활용한 신용장 심사 PoC 개발', '201804', '201806', 3, null)
+	       , (2, '하나은행 챗봇 학습기반 구축', '201811', '201907', 9, null)
+	       , (2, '하나은행 신용대출 상품추천 시스템 구축', '201811', '201907', 9, null)
+	       , (2, '국민은행 인공지능 사기대출 탐지 시스템 구축', '201911', '202005', 7, null)
+	       , (2, '농협은행 베스트뱅커 지표예측 시스템 구축', '202104', '202111', 8, null)
+	       , (2, 'SK매직 차세대 프로젝트', '202112', NULL, NULL, null);
+
+SELECT * FROM PROJECT_LIST;
+#############################################################################################################
+
+
+##########################################    PROJECT_TECHNIC     ###########################################
+CREATE TABLE PROJECT_TECHNIC(
+    PROJECT_TECHNIC_SEQ INT NOT NULL AUTO_INCREMENT,  
+    PROJECT_ID INT NOT NULL,
+    TECHNIC_ID INT,
+    PRIMARY KEY ( PROJECT_TECHNIC_SEQ ),
+    FOREIGN KEY ( PROJECT_ID ) REFERENCES PROJECT_LIST(PROJECT_ID),
+	 FOREIGN KEY ( TECHNIC_ID ) REFERENCES TECHNIC_CODE(TECHNIC_ID)
+);
+
+INSERT INTO PROJECT_TECHNIC (PROJECT_ID, TECHNIC_ID) 
+     VALUES (1,1), (1,15)															# 우리은행 AI-OCR => JAVA, MYSQL
+          , (2,10), (2,11), (2,14)												# 하나은행 챗봇 => HADOOP, HIVE, OOZIE
+          , (3,3), (3,8), (3,10), (3,11), (3,14), (3,16)					# 하나은행 신용대출 => Python ,pySpark, scikit-learn, Hadoop , Oozie, Hive
+          , (4,3), (4,8), (4,10), (4,11), (4,13), (4,14), (4,16)		# 국민은행 사기대출 => Python ,pySpark, scikit-learn, Hadoop , Oozie, Hive, Sqoop
+          , (5,3), (5,8), (5,10), (5,11), (5,14), (5,16)					# 농협은행 베스트뱅커  => Python ,pySpark, scikit-learn, Hadoop , Oozie, Hive
+          , (6,1), (6,2), (6,9), (6,4), (6,7), (6,15)						# SK 매직 차세대  => Java, JavaScript, React.js, Spring, myBatis, mysql
+;        
+          
+SELECT * FROM PROJECT_TECHNIC;
+
+    SELECT B.PROJECT_NAME
+         , GROUP_CONCAT(C.TECHNIC_NAME_ENG)
+      FROM PROJECT_TECHNIC A
+INNER JOIN PROJECT_LIST B
+        ON A.PROJECT_ID = B.PROJECT_ID
+INNER JOIN TECHNIC_CODE C
+        ON A.TECHNIC_ID = C.TECHNIC_ID  
+  GROUP BY B.PROJECT_NAME
+;
+#############################################################################################################
 
 
 
+###########################################    PROJECT_TASK     #############################################
+CREATE TABLE PROJECT_TASK(
+    PROJECT_TASK_SEQ INT NOT NULL AUTO_INCREMENT,  
+    PROJECT_ID INT NOT NULL,
+    ROLE_ID INT,
+    TASK_DEPTH1 VARCHAR(1000),
+    TASK_DEPTH2 VARCHAR(1000),
+	 TASK_DEPTH3 VARCHAR(1000),
+    PRIMARY KEY ( PROJECT_TASK_SEQ ),
+    FOREIGN KEY ( PROJECT_ID ) REFERENCES PROJECT_LIST(PROJECT_ID),
+	 FOREIGN KEY ( ROLE_ID ) REFERENCES ROLE_CODE(ROLE_ID)
+);
 
-/*
-TABLE : PROJECT_LIST
+INSERT INTO PROJECT_TASK (PROJECT_ID, ROLE_ID, TASK_DEPTH1, TASK_DEPTH2) 
+     VALUES (1, 2, '데이터 마트 구축 및 데이터 수집', '데이터 적재 프로그램 개발')		    #  우리은행 aI-OCR => Data Enginner, Java
+     
+          , (2, 2, '데이터 마트 구축 및 데이터 수집', '분석 마트 테이블 정의')		      #  하나은행 챗봇 => Data Enginner, Hive
+          , (2, 2, '데이터 마트 구축 및 데이터 수집', '데이터 전처리 및 마트 적재')       #  하나은행 챗봇 => Data Enginner, Hive
+          
+		  , (3, 2, '데이터 마트 구축 및 데이터 수집', '분석 마트 테이블 정의')		                                 #  하나은행 신용대출 => Data Enginner, Hive
+          , (3, 2, '데이터 마트 구축 및 데이터 수집', '데이터 분산/병렬 전처리 수행')                                 #  하나은행 신용대출 => Data Enginner, pyspark
+          , (3, 2, 'ML 학습/예측 파이프라인 구축', '데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축')   #  하나은행 신용대출 => Data Enginner, pyspark			 
+          , (3, 3, '데이터 탐색 분석', 'EDA(Exploratory Data Analysis)를 통한 변수 발굴')                            #  하나은행 신용대출 => Data Analyst, scikit-learn
+          , (3, 3, '예측모형 개발', '신용대출 가입 예측 모형 개발')                                                  #  하나은행 신용대출 => Data Analyst, scikit-learn
+          , (3, 3, '예측모형 개발', '예측 확률에 대한 근거 도출')                                                    #  하나은행 신용대출 => Data Analyst, Lime
 
-|   PROJECT_ID(PK)  |                     TITLE                     |  FROM_DATE  |    END_DATE   |     PERIOD       |
-|        1          |                SK매직 차세대 프로젝트           |  202112     |               |                  |
-|        2          |       농협은행 베스트뱅커 지표예측 시스템 구축   |   202104     |    202111    |        7         |
-|        3          |    국민은행 인공지능 사기대출 탐지 시스템 구축   |   201911     |    202005    |        7         |
-|        4          |       하나은행 신용대출 상품추천 시스템 구축     |   201811     |    201907    |        9         |
-|        5          |           하나은행 챗봇 학습기반 구축           |   201811     |     201907   |        9         |
-|        6          |  우리은행 AI-OCR을 활용한 신용장 심사 PoC 개발   |   201804     |    201806    |       3          |
-*/
+			 , (4, 2, '데이터 마트 구축 및 데이터 수집', '분석 마트 테이블 정의')		                                 #  국민은행 사기대출 => Data Enginner, Hive
+			 , (4, 2, '데이터 마트 구축 및 데이터 수집', '레거시 RDB에서 하둡으로 ETL 작업 수행')                       #  국민은행 사기대출 => Data Enginner, Sqoop
+          , (4, 2, '데이터 마트 구축 및 데이터 수집', '데이터 분산/병렬 전처리 수행')                                 #  국민은행 사기대출 => Data Enginner, pyspark
+          , (4, 2, 'ML 학습/예측 파이프라인 구축', '데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축')   #  국민은행 사기대출 => Data Enginner, pyspark			 
+          , (4, 3, '데이터 탐색 분석', 'EDA(Exploratory Data Analysis)를 통한 변수 발굴')                            #  국민은행 사기대출 => Data Analyst, scikit-learn
+          , (4, 3, '데이터 탐색 분석', 'Feature Selection 기법을 통한 변수 소거 기법 적용')                          #  국민은행 사기대출 => Data Analyst, scikit-learn
+          , (4, 3, '예측모형 개발', '사기/정상 대출 예측모형 개발')                                                  #  국민은행 사기대출 => Data Analyst, scikit-learn
+          , (4, 3, '예측모형 개발', '예측 확률에 대한 근거 도출')                                                    #  국민은행 사기대출 => Data Analyst, shap
 
-/*
-TABLE : PROJECT_TECHNIC_LANGUAGE
-|   SEQ(PK)   |   PROJECT_ID(FK)  |    LANGUAGE_ID(FK)   |   LIBRARY_ID(FK)   |
-|      1      |        1          |           1          |                    |
-|      2      |        1          |           2          |                    |
-|      3      |        2          |           3          |         6          |
-|      4      |        2          |           3          |         7          |
-|      5      |        3          |           3          |         6          |
-|      6      |        3          |           3          |         7          |
-|      7      |        4          |           3          |         6          |
-|      8      |        4          |           3          |         7          |
-|      9      |        5          |           1          |                    |
+			 , (5, 2, '데이터 마트 구축 및 데이터 수집', '분석 마트 테이블 정의')		                                 #  농협은행 베스트뱅커 => Data Enginner, Hive
+          , (5, 2, '데이터 마트 구축 및 데이터 수집', '데이터 분산/병렬 전처리 수행')                                 #  농협은행 베스트뱅커 => Data Enginner, pyspark
+          , (5, 2, 'ML 학습/예측 파이프라인 구축', '데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축')   #  농협은행 베스트뱅커 => Data Enginner, pyspark			 
+          , (5, 3, '데이터 탐색 분석', 'EDA(Exploratory Data Analysis)를 통한 변수 발굴')                            #  농협은행 베스트뱅커 => Data Analyst, scikit-learn
+          , (5, 3, '예측모형 개발', '수치형(점수) 시계열 데이터 예측 모형 개발')                                     #  농협은행 베스트뱅커 => Data Analyst, scikit-learn
 
-TABLE : PROJECT_TECHNIC_FRAMEWORK
-|   SEQ(PK)   |   PROJECT_ID(FK)  |   FRAMEWORK_ID(FK)   | SUBFRAMEWORK_ID(FK) |
-|      1      |        1          |           2          |                     |
-|      2      |        1          |           3          |                     |
-|      3      |        1          |           5          |                     |
-|      4      |        1          |           8          |                     |
-|      5      |        2          |           1          |         9           |
-|      6      |        2          |           1          |         10          |
-|      7      |        2          |           1          |         11          |
-|      8      |        3          |           1          |         9           |  
-|      9      |        3          |           1          |         10          |
-|      10     |        3          |           1          |         11          |
-|      11     |        3          |           1          |         12          |
-|      12     |        4          |           1          |         9           |
-|      13     |        4          |           1          |         10          |
-|      14     |        4          |           1          |         11          |
-|      15     |        5          |           1          |         9           |
-|      16     |        5          |           1          |         10          |
-|      17     |        6          |           5          |                     |
-*/
+          
+          , (6, 1, '공통기능 모듈 개발','MSA간 보상트랜잭션 관리 모듈 개발')
+          , (6, 1, 'Back-end 개발', '렌탈계약변경 로직 개발')
+          , (6, 1, 'Back-end 개발', '렌탈계약변경 배치 개발')
+          , (6, 1, 'Front-end 개발', '렌탈계약관리 화면 개발')
+          , (6, 1, 'Front-end 개발', '개인수집동의관리 화면 개발')
+;
+          
+SELECT * FROM PROJECT_TASK;
 
-/*
-TABLE : PROJECT_TASK
-|    TASK_SEQ(PK)    |   PROJECT_ID(FK)  |    ROLE_ID(FK)   |                    TASK_1                    |                         TASK_2                             |           TECHNIC(FK)         |
-|         1          |        1          |         1        |               공통기능 모듈 개발              |              MSA간 보상트랜잭션 관리 모듈 개발                |               13              |
-|         2          |        1          |         1        |                Back-end 개발                 |                    렌탈계약변경 로직 개발                    |                2              |
-|         3          |        1          |         1        |                Back-end 개발                 |                    렌탈계약변경 배치 개발                    |                3              |
-|         4          |        1          |         1        |                Front-end 개발                |                    렌탈계약관리 화면 개발                    |                8              |
-|         5          |        1          |         1        |                Front-end 개발                |                  개인수집동의관리 화면 개발                   |               8               |
-|         6          |        2          |         2        |        데이터 마트 구축 및 데이터 수집         |                    분석 마트 테이블 정의                     |               10              |
-|         7          |        2          |         2        |        데이터 마트 구축 및 데이터 수집         |                데이터 분산 / 병렬 전처리 수행                 |               6               |
-|         8          |        2          |         2        |          ML 학습/예측 파이프라인 구축          |  데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축  |               6               |
-|         9          |        2          |         2        |          ML 학습/예측 파이프라인 구축          |  데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축  |               9               |
-|         10         |        2          |         2        |          ML 학습/예측 파이프라인 구축          |  데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축  |               10              |
-|         11         |        2          |         3        |                 데이터 탐색 분석              |        EDA(Exploratory Data Analysis)를 통한 변수 발굴       |               7               |
-|         12         |        2          |         3        |                  예측모형 개발                |             수치형(점수) 시계열 데이터 예측 모형 개발          |               7               |
-|         13         |        3          |         2        |        데이터 마트 구축 및 데이터 수집         |                    분석 마트 테이블 정의                     |               10              |
-|         14         |        3          |         2        |        데이터 마트 구축 및 데이터 수집         |                데이터 분산 / 병렬 전처리 수행                 |               6               |
-|         15         |        3          |         2        |          ML 학습/예측 파이프라인 구축          |  데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축  |               6               |
-|         16         |        3          |         2        |          ML 학습/예측 파이프라인 구축          |  데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축  |               9               |
-|         17         |        3          |         2        |          ML 학습/예측 파이프라인 구축          |  데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축  |               10              |
-|         18         |        3          |         3        |                 데이터 탐색 분석              |        EDA(Exploratory Data Analysis)를 통한 변수 발굴       |               7               |
-|         19         |        3          |         3        |                 데이터 탐색 분석              |        Feature Selection 기법을 통한 변수 소거 기법 적용      |               7               |
-|         20         |        3          |         3        |                  예측모형 개발                |                   사기/정상 대출 예측모형 개발                |               7               |
-|         21         |        3          |         3        |                  예측모형 개발                |                     예측 확률에 대한 근거 도출                |               14              |
-|         22         |        4          |         2        |        데이터 마트 구축 및 데이터 수집         |                    분석 마트 테이블 정의                     |               10              |
-|         23         |        4          |         2        |        데이터 마트 구축 및 데이터 수집         |             레거시 RDB에서 하둡으로 ETL 작업 수행             |               12              |
-|         24         |        4          |         2        |        데이터 마트 구축 및 데이터 수집         |                데이터 분산 / 병렬 전처리 수행                 |               6               |
-|         25         |        4          |         2        |          ML 학습/예측 파이프라인 구축          |  데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축  |               6               |
-|         26         |        4          |         2        |          ML 학습/예측 파이프라인 구축          |  데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축  |               9               |
-|         27         |        4          |         2        |          ML 학습/예측 파이프라인 구축          |  데이터 수집, 전처리, 학습/예측, 분석결과 저장 파이프라인 구축  |               10              |
-|         28         |        4          |         3        |                 데이터 탐색 분석              |        EDA(Exploratory Data Analysis)를 통한 변수 발굴       |               7               |
-|         29         |        4          |         3        |                  예측모형 개발                |                  신용대출 가입 예측 모형 개발                 |               7               |
-|         30         |        4          |         3        |                  예측모형 개발                |                   예측 확률에 대한 근거 도출                  |               15              |
-|         31         |        5          |         2        |         데이터 마트 구축 및 데이터 수집        |                      분석 마트 테이블 정의                    |               10              |
-|         32         |        5          |         2        |         데이터 마트 구축 및 데이터 수집        |                    데이터 전처리 및 마트 적재                 |               10              |
-|         33         |        6          |         2        |         데이터 마트 구축 및 데이터 수집        |                     데이터 적재 프로그램 개발                 |                               |
 
-*/
+    SELECT A.PROJECT_TASK_SEQ
+	      , B.PROJECT_NAME
+         , D.ROLE_NAME_ENG
+         , A.TASK_DEPTH1
+         , A.TASK_DEPTH2
+      FROM PROJECT_TASK A
+INNER JOIN PROJECT_LIST B
+        ON A.PROJECT_ID = B.PROJECT_ID
+INNER JOIN ROLE_CODE D
+        ON A.ROLE_ID = D.ROLE_ID  
+  ORDER BY A.PROJECT_TASK_SEQ
+;
+#############################################################################################################
 
-/*
 
-TABLE : ROLE_CODE
-|    ROLE_ID(PK)     |       ROLE_NAME       |
-|         1          | Application Developer |
-|         2          |      Data Enginner    |
-|         3          |      Data Analyst     |
 
-TABLE : LANGUAGE_CODE
-|  LANGUAGE_ID(PK)  |   LANGUAGE_NAME   |
-|         1         |        Java       |
-|         2         |     JavaScript    |
-|         3         |       Python      |
+##########################################    TASK_TECHNIC     ###########################################
+CREATE TABLE TASK_TECHNIC(
+    TASK_TECHNIC_SEQ INT NOT NULL AUTO_INCREMENT,  
+    PROJECT_TASK_SEQ INT NOT NULL,
+    TECHNIC_ID INT,
+    PRIMARY KEY ( TASK_TECHNIC_SEQ ),
+    FOREIGN KEY ( PROJECT_TASK_SEQ ) REFERENCES PROJECT_TASK(PROJECT_TASK_SEQ),
+	 FOREIGN KEY ( TECHNIC_ID ) REFERENCES TECHNIC_CODE(TECHNIC_ID)
+);
 
-TABLE : DB_AND_FRAMEWORK_CODE
-|  FRAMEWORK_ID(PK)  |  FRAMEWORK_NAME   |
-|         1          |      Hadoop       |
-|         2          |      Spring       |
-|         3          |   Spring Batch    |
-|         4          |      myBatis      |
-|         5          |       mysql       |
-|         6          |      pySpark      |
-|         7          |   scikit-learn    |
-|         8          |     React.js      |
-|         9          |       Oozie       |
-|         10         |        Hive       |
-|         11         |       Spark       |
-|         12         |       Sqoop       |
-|         13         |     SpringAop     |
-|         14         |        Shap       |
-|         15         |        Lime       |
+INSERT INTO TASK_TECHNIC (PROJECT_TASK_SEQ, TECHNIC_ID) 
+     VALUES (1,1)
+          , (2,11)
+          , (3,11)
+          , (4,11)
+          , (5,8)
+          , (6,8)
+          , (6,10)
+          , (6,11)
+          , (7,16)
+          , (8,16)
+          , (9,19)
+          , (10,11)
+          , (11,13)
+          , (12,8)
+          , (13,8)         
+          , (14,16)          
+          , (15,16)  
+          , (16,16)  
+          , (17,18)
+			 , (18,11)
+			 , (19,8)
+			 , (20,8)
+			 , (20,10)
+			 , (20,11) 
+			 , (21,16) 
+			 , (22,16) 
+			 , (23,4) 
+			 , (24,4) 
+			 , (25,5) 
+			 , (26,9) 
+			 , (27,9) 
+;        
+          
+SELECT * FROM TASK_TECHNIC;
+
+		    SELECT A.PROJECT_ID
+			      , A.PROJECT_TASK_SEQ
+			      , B.PROJECT_NAME
+		         , D.ROLE_NAME_ENG
+		         , A.TASK_DEPTH1
+		         , A.TASK_DEPTH2
+		         , GROUP_CONCAT(F.TECHNIC_NAME_ENG ORDER BY E.TASK_TECHNIC_SEQ)
+		      FROM PROJECT_TASK A
+		INNER JOIN PROJECT_LIST B
+		        ON A.PROJECT_ID = B.PROJECT_ID
+		INNER JOIN ROLE_CODE D
+		        ON A.ROLE_ID = D.ROLE_ID  
+ LEFT OUTER JOIN TASK_TECHNIC E
+              ON A.PROJECT_TASK_SEQ = E.PROJECT_TASK_SEQ
+      INNER JOIN TECHNIC_CODE F
+		        ON E.TECHNIC_ID = F.TECHNIC_ID
+		  GROUP BY A.PROJECT_ID
+		         , A.PROJECT_TASK_SEQ
+			      , B.PROJECT_NAME
+		         , D.ROLE_NAME_ENG
+		         , A.TASK_DEPTH1
+		         , A.TASK_DEPTH2      
+;
+#############################################################################################################
+
+
+          SELECT PERSON.PERSON_ID
+			      , COMPANY.COMPANY_ID
+			      , COMPANY.COMPANY_NAME
+					, CONCAT(COMPANY.FROM_DATE, ' ~ ', IFNULL(COMPANY.END_DATE,'현재')) AS COMPANY_DATE 
+					, PROJECT.PROJECT_ID
+					, PROJECT.PROJECT_NAME
+					, CONCAT(PROJECT.FROM_DATE, ' ~ ', IFNULL(PROJECT.END_DATE,'현재')) AS PROJECT_DATE 
+					, PROJECT.PERIOD
+					, PROJECT.PROJECT_TECHNIC_LIST
+					, PROJECT.GITHUB_ADDRESS
+					, TASK.ROLE_NAME_ENG
+					, TASK.TASK_DEPTH1
+					, TASK.TASK_DEPTH2
+					, TASK.TASK_TECHNIC_LIST
+		      FROM PERSON_LIST PERSON
+ LEFT OUTER JOIN company_list COMPANY 
+		        ON PERSON.PERSON_ID = COMPANY.PERSON_ID
+ LEFT OUTER JOIN (         SELECT A.PROJECT_ID
+ 										  , A.PROJECT_NAME
+ 										  , A.FROM_DATE
+ 										  , A.END_DATE
+ 										  , A.PERIOD
+ 										  , A.GITHUB_ADDRESS
+						              , A.COMPANY_ID
+						              , JSON_OBJECTAGG(MAIN.TECHNIC_NAME_ENG, SUB.SUB_TECHNIC_LIST) AS PROJECT_TECHNIC_LIST
+						           FROM project_list A
+						     INNER JOIN PROJECT_TECHNIC B
+						             ON A.PROJECT_ID = B.PROJECT_ID
+						     INNER JOIN TECHNIC_CODE MAIN
+						             ON B.TECHNIC_ID = MAIN.TECHNIC_ID
+						            AND MAIN.TECHNIC_DVS IN ('LANGUAGE', 'DB')
+						LEFT OUTER JOIN (         SELECT A.PROJECT_ID
+						                         , SUB.TAG2
+									                , GROUP_CONCAT(SUB.TECHNIC_NAME_ENG ORDER BY SUB.TECHNIC_ID) AS SUB_TECHNIC_LIST
+									             FROM project_list A
+									       INNER JOIN PROJECT_TECHNIC B
+									               ON A.PROJECT_ID = B.PROJECT_ID
+								          INNER JOIN TECHNIC_CODE SUB
+								                  ON B.TECHNIC_ID = SUB.TECHNIC_ID
+								                 AND SUB.TAG2 IS NOT NULL
+							               GROUP BY A.PROJECT_ID
+											          , SUB.TAG2 
+						  			       ) SUB
+						  			    ON A.PROJECT_ID = SUB.PROJECT_ID
+						  			   AND MAIN.TECHNIC_NAME_ENG = SUB.TAG2
+						   	 GROUP BY A.PROJECT_ID
+						   	        , A.COMPANY_ID
+						   	        , A.PROJECT_NAME
+ 										  , A.FROM_DATE
+ 										  , A.END_DATE
+ 										  , A.PERIOD
+ 										  , A.GITHUB_ADDRESS
+ 					  ) PROJECT
+              ON COMPANY.COMPANY_ID = PROJECT.COMPANY_ID
+ LEFT OUTER JOIN (          SELECT A.PROJECT_ID
+									      , A.PROJECT_TASK_SEQ
+									      , B.PROJECT_NAME
+								         , D.ROLE_NAME_ENG
+								         , A.TASK_DEPTH1
+								         , A.TASK_DEPTH2
+								         , GROUP_CONCAT(F.TECHNIC_NAME_ENG ORDER BY E.TASK_TECHNIC_SEQ) AS TASK_TECHNIC_LIST
+								      FROM PROJECT_TASK A
+								INNER JOIN PROJECT_LIST B
+								        ON A.PROJECT_ID = B.PROJECT_ID
+								INNER JOIN ROLE_CODE D
+								        ON A.ROLE_ID = D.ROLE_ID  
+						 LEFT OUTER JOIN TASK_TECHNIC E
+						              ON A.PROJECT_TASK_SEQ = E.PROJECT_TASK_SEQ
+						      INNER JOIN TECHNIC_CODE F
+								        ON E.TECHNIC_ID = F.TECHNIC_ID
+								  GROUP BY A.PROJECT_ID
+								         , A.PROJECT_TASK_SEQ
+									      , B.PROJECT_NAME
+								         , D.ROLE_NAME_ENG
+								         , A.TASK_DEPTH1
+								         , A.TASK_DEPTH2     
+                 ) TASK		         
+		        ON PROJECT.PROJECT_ID = TASK.PROJECT_ID
+           WHERE PERSON.PERSON_ID = 1
+		  ORDER BY COMPANY.FROM_DATE DESC
+	            , PROJECT.FROM_DATE DESC	         
+               , PROJECT.PROJECT_ID DESC	
+		         ;
 */
 
 

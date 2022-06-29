@@ -9,18 +9,15 @@ const ContentProjectBodyContent = (props) => {
     const content = props.content;
     const subContent = props.subContent;
     const tags = props.tags;
-    const style = props.style;
-    
+    const contentStyle = props.contentStyle;
+    const tagColor = props.tagColor;
+
     return (
         <div className={"ContentProjectBodySentence SentenceDepth" + depth}>
             {iconName  && <Icon style={{float:"left", marginRight:"8px"}} name={iconName}/>}
-            {content && <span style={{float:"left", ...style}}> {content} </span>}
+            {content && <span style={{float:"left", ...contentStyle}}> {content} </span>}
             {subContent && <span style={{float:"left", fontSize:"11px", marginTop:"2px", marginLeft:"4px"}}>{subContent}</span>}
-            {tags && 
-                tags.map((tag) => <Label style={{ fontSize:"11px", float:"left", padding:"4px 8px", marginRight:"8px"}} as='a' color="blue">
-                                    {tag}
-                                  </Label>
-                        )}
+            {tags && tags.map((tag) => <Label style={{ fontSize:"11px", padding:"4px 8px", marginRight:"8px"}} as='a' color={tagColor} horizontal={true} children={tag}/>)}
         </div>
     );
 }
