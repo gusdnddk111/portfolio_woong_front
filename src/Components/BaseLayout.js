@@ -13,7 +13,7 @@ const BaseLayout = (props) => {
                     <div className="VerticalLine"/>
                 </div>
                 <div className="RightContainer">
-                    <ContentTitle content={title}/>
+                    {title && <ContentTitle content={title}/>}
                     <div className="Contents">
                         {contents}
                     </div>

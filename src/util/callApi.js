@@ -9,8 +9,7 @@ export default function callApi ({
     isLoading=true
 }, config) {
     const api_url = url;
-    console.log(' ========= request =========');
-    console.log(api_url);
+    console.log('[Request] : ' + api_url);
     console.log(data)
 
     return axios({
@@ -26,7 +25,7 @@ export default function callApi ({
         
         ...config,
     }).then((response) => {
-        console.log(' ========= response =========');
+        console.log('[Response] : ' + api_url);
         console.log(response);
         
         const { data } = response;

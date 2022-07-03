@@ -4,7 +4,7 @@ import '../../CSS/Header.css';
 const HeaderProfileContact = (props) => {
     const content = props.content;
     const image = props.image;
-    const isHref = content.startsWith("http");
+    const isHref = content?.startsWith("http");
     
     return (
         <>

@@ -1,140 +1,88 @@
-import React from 'react';
-import '../../CSS/ContentProject.css';
-import { Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import { Grid, Segment, Icon } from 'semantic-ui-react'
-import ContentProjectBodyTitle from './ContentProjectBodyTitle';
-import ContentProjectBodyContent from './ContentProjectBodyContent';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { getState, actions } from '../../state/mainSlice';
 
-const ProjectsContentBody = (props) => {
+import { Button } from 'semantic-ui-react';
+import { Grid, Segment, Icon } from 'semantic-ui-react';
+
+import '../../CSS/PortfolioProject.css';
+import ProjectHeader from './ProjectHeader';
+import ProjectBody from './ProjectBody';
+
+const CompanyBody = (props) => {
+    const projectInfo = props.projectInfo;
     const dropdown = props.dropdown;
-    const data = props.data;
-    const data1 = [
-        {title:"SK매직 차세대 프로젝트",
-         subTitle:"(2021.12 ~ 현재)",
-         developLanguage:"Java, JavaScript",
-         developFramework: "React.js, Spring, myBatis, mysql",
-         tasks: [{role:"Application Developer", 
-                  task:[{taskName:"공통기능 모듈 개발",
-                         taskContent:["MSA간 보상트랜잭션 관리 모듈 개발 (Spring AOP)"]},
-                        {taskName:"Back-end 개발",
-                         taskContent:["렌탈계약변경 로직 개발 (Spring)", "렌탈계약변경 배치 개발 (Spring Batch)"]},
-                        {taskName:"Front-end 개발",
-                         taskContent:["렌탈계약관리 화면 개발 (React.js)","개인수집동의관리 화면 개발 (React.js)"]}
-                        ]
-                }]
-        }
-    ];
+    const [projectList, setProjectList] = useState([]);
+    //let projectList=[];
 
-    const createHtmlTag = (data) => {
-        let htmlTag = '';
+    useEffect(() => {
+        
+        if(projectInfo.length>0){
+            // 프로젝트별 타이틀
+            const tempProjectList = [];
 
-        for(let projectObj of data){
-            let htmlHeadTag = '';
-            let htmlBodyTag = '';
-
-            htmlHeadTag += <ContentProjectBodyTitle ribbon={true} title={projectObj.title} subTitle={projectObj.subTitle}/>;
-
-            htmlBodyTag += <ContentProjectBodyContent 
-                            depth="1" 
-                            iconName="checkmark" 
-                            content={"개발 언어 및 활용 프레임워크 : " + projectObj.developLanguage + " / " + projectObj.developFramework}
-                            />;
-            htmlBodyTag += <ContentProjectBodyContent depth="1" iconName="chevron right" content="수행 내용"/>;
-
-            for(let tasks of projectObj.tasks){
-                htmlBodyTag += <ContentProjectBodyContent depth="2" contentStyle={{color:"rgb(33 139 247)"}} content={"[ "+tasks.role+" ]"}/>;
-                for(let task of tasks.task){
-                    htmlBodyTag += <ContentProjectBodyContent depth="3" iconName="chevron right" content={task.taskName}/>;
-                    for(let taskContent of task.taskContent){
-                        htmlBodyTag += <ContentProjectBodyContent depth="4" content={"· " + taskContent}/>;
-                    }
+            projectInfo.map((project) => {
+                const technicJson = JSON.parse(project.PROJECT_TECHNIC_LIST);
+                let technicList = [];
+                for(let key in technicJson){
+                    technicList.push({main:key, sub:technicJson[key]?.split(',')})
+                }
+                // let technicList = JSON.parse(project.PROJECT_TECHNIC_LIST);
+                // for(let key in technicList){
+                //     technicList[key] = technicList[key].split(',');
+                // }
+                if(tempProjectList.filter((item)=>item.projectId===project.PROJECT_ID).length===0){
+                    tempProjectList.push(
+                        {projectId: project.PROJECT_ID
+                        ,projectName: project.PROJECT_NAME
+                        ,projectDate: project.PROJECT_DATE
+                        ,period: project.PERIOD
+                        ,githubAddress: project.GITHUB_ADDRESS
+                        ,technicList: technicList
+                        ,tasksByRole:{}
+                        }
+                    )
+                }
+            });
+            
+            // 프로젝트별 내용
+            for(let elem of tempProjectList){
+                const key = elem.projectId;
+                const project = projectInfo.filter((project)=>project.PROJECT_ID===key);
+                const roleList = new Set(project.map((project)=>project.ROLE_NAME_ENG));
+                
+                for(let role of roleList){
+                    let taskList = []
+                    project.filter((project)=>project.ROLE_NAME_ENG === role).map((project)=>{
+                        taskList.push({taskName:project.TASK_DEPTH1, task:project.TASK_DEPTH2, technicList:project.TASK_TECHNIC_LIST?.split(',')})
+                    });
+                    elem.tasksByRole[role] = taskList;
                 }
             }
-
-            htmlTag += htmlHeadTag;
-            htmlTag += <div className="ContentProjectBodySentenceContainer">{htmlBodyTag}</div>;
+            console.log(tempProjectList);
+            setProjectList(tempProjectList);
         }
-        console.log(htmlTag)
-        return htmlHeadTag
-    }
+    }, [projectInfo])
 
-
+    
     return (<>
         {dropdown && (
-            <div className="ContentBodyContainer" ref={props.bodyRef}>
+            <div className="CompanyBodyContainer" ref={props.bodyRef}>
                 <Grid>
                     <Grid.Column>
                         <Segment raised>
-                            {createHtmlTag(data1)}
-                            <ContentProjectBodyTitle ribbon={true} title="SK매직 차세대 프로젝트" subTitle="(2021.12 ~ 현재)"/>
-                            <div className="ContentProjectBodySentenceContainer">
-                                <ContentProjectBodyContent 
-                                    depth="1" 
-                                    iconName="checkmark" 
-                                    content="개발 언어 및 활용 프레임워크"
-                                />
-                                <ContentProjectBodyContent
-                                    depth="2"
-                                    tagColor="blue"
-                                    tags={["JavaScript","React.js"]}
-                                />
-                                <ContentProjectBodyContent
-                                    depth="2"
-                                    tagColor="blue"
-                                    tags={["Java","Spring","myBatis","mysql"]}
-                                />
-                                <div style={{height:"16px"}}/>
-                                <ContentProjectBodyContent 
-                                    depth="1" 
-                                    iconName="checkmark" 
-                                    content="수행 내용"
-                                />
-                                <ContentProjectBodyContent 
-                                    depth="2" 
-                                    contentStyle={{color:"#2185d0"}}
-                                    content="[ Application Developer ]"
-                                />
-                                <ContentProjectBodyContent 
-                                    depth="2" 
-                                    content="- 공통기능 모듈 개발"
-                                />
-                                <ContentProjectBodyContent 
-                                    depth="4" 
-                                    content="· MSA간 보상트랜잭션 관리 모듈 개발"
-                                    subContent="(Spring AOP)"
-                                />
-                                <ContentProjectBodyContent 
-                                    depth="2" 
-                                    content="- Back-end 개발"
-                                />
-                                <ContentProjectBodyContent 
-                                    depth="4" 
-                                    content="· 렌탈계약변경 로직 개발"
-                                    subContent="(Spring)"
-                                />
-                                <ContentProjectBodyContent 
-                                    depth="4" 
-                                    content="· 렌탈계약변경 배치 개발"
-                                    subContent="(Spring Batch)"
-                                />
-                                <ContentProjectBodyContent 
-                                    depth="2" 
-                                    
-                                    content="- Front-end 개발"
-                                />
-                                <ContentProjectBodyContent 
-                                    depth="4" 
-                                    content="· 렌탈계약관리 화면 개발"
-                                    subContent="(React.js)"
-                                />
-                                <ContentProjectBodyContent 
-                                    depth="4" 
-                                    content="· 개인수집동의관리 화면 개발"
-                                    subContent="(React.js)"
-                                />
-                            </div>
-                            <ContentProjectBodyTitle ribbon={true} title="SK매직 차세대 프로젝트" subTitle="(2021.12 ~ 현재)"/>
+                            {
+                            projectList.map((project)=>{
+                                const periodStr = project.period ? ', '+project.period+'개월' : '';
+                                return (
+                                        <>
+                                            <ProjectHeader ribbon={true} githubAddress={project.githubAddress} title={project.projectName} subTitle={"(" + project.projectDate + periodStr + ")"}/>
+                                            <ProjectBody tasks={project.tasksByRole} technicList={project.technicList}/>
+                                        </>
+                                );
+                            })
+                            }
                         </Segment>
                     </Grid.Column>
                 </Grid>
@@ -143,6 +91,8 @@ const ProjectsContentBody = (props) => {
         </>
     );
 }
+// 
+export default CompanyBody;
 
 /*
 #CREATE DATABASE PORTFOLIO;
@@ -544,7 +494,6 @@ SELECT * FROM TASK_TECHNIC;
 
 
 /*
-<div className='ContentBodyContainer' ref={props.bodyRef}>
             <div className="ContentBodyOrderButtonContainer">
                 <Button style={{float:"right"}} icon='sort numeric down' />
                 <Button.Group style={{float:"right"}} basic size='small'>
@@ -638,4 +587,3 @@ SK매직 차세대 프로젝트 (2021.12 ~ 현재)
                 => 데이터 적재 프로그램 개발
 */
 
-export default ProjectsContentBody;

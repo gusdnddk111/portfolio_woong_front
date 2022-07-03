@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef  } from 'react';
+import { useSelector } from 'react-redux'
+import { getState } from '../../state/mainSlice';
+
 import SuperEllipse from "react-superellipse";
 import profileImage from '../../image/profileImage.jfif';
 import HeaderProfileContact from './HeaderProfileContact'
@@ -9,14 +12,16 @@ import TypeMe, { Delete } from 'react-typeme';
 import phoneIcon from '../../image/phoneCall.png';
 import mailIcon from '../../image/mail.png';
 import githubIcon from '../../image/github.png';
+//getPersonInfo
 
 const HeaderMain = () => {
     const [isErase, setIsErase] = useState(false);
     const [isNameEnd, setIsNameEnd] = useState(false);
     const [isJobEnd, setIsJobEnd] = useState(false);
     const [profileContactClassName, setProfileContactClassName] = useState("ProfileContactHide");
-    
+    const personInfo = useSelector((state)=>getState(state).personInfo);
     const profileContact = useRef(null);
+    
 
     useEffect(() => {
         if(isJobEnd){
@@ -24,10 +29,12 @@ const HeaderMain = () => {
         }
     }, [isJobEnd])
 
+
     return (
-        <>
+        <> 
             <div className="HeaderContainer" style={{height:'400px'}}>
                 <div className="LeftOffset"/>
+                { personInfo &&
                 <div className="RightContainer">
                     <div className='ProfileName'>
                         {!isErase ? 
@@ -45,7 +52,7 @@ const HeaderMain = () => {
                             cursor
                             fixedWidth={false}
                             onDone={() => setIsNameEnd(true)}>
-                            조현웅
+                            {personInfo.NAME_KOR}
                         </Typing>
                         }
                     </div>
@@ -59,16 +66,17 @@ const HeaderMain = () => {
                             cursor
                             fixedWidth={false}
                             onDone={() => setIsJobEnd(true)}>
-                            SK C&C 데이터 엔지니어
+                            {personInfo.JOB}
                         </Typing>
                         }
                     </div>
                     <div className={profileContactClassName} ref={profileContact}>
-                        <HeaderProfileContact image={phoneIcon} content={'010-3549-9453'}/>
-                        <HeaderProfileContact image={mailIcon} content={'gusdnddk111@gmail.com'}/>
-                        <HeaderProfileContact image={githubIcon} content={'https://github.com/gusdnddk111'}/>    
+                        <HeaderProfileContact image={phoneIcon} content={personInfo.PHONE_NUMBER}/>
+                        <HeaderProfileContact image={mailIcon} content={personInfo.EMAIL_ADDRESS}/>
+                        <HeaderProfileContact image={githubIcon} content={personInfo.GITHUB_ADDRESS}/>    
                     </div>
                 </div>
+                }
             </div> 
             <SuperEllipse className="profileImageContainer" r1={0.14} r2={0.5}>
                 <img className="profileImage" src={profileImage} alt=""/>

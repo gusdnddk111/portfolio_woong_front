@@ -13,7 +13,7 @@
     src: url("../../public/Resource/RixLightM.ttf");
 }
 
-.ProjectContainer {
+.ProjectMainContainer {
     height:fit-content;
 
     float:left;
@@ -32,7 +32,7 @@
     overflow:auto;
 }
 
-.ContentHeaderContainer {
+.ComapnyHeaderContainer {
     
     margin-top: 50px;
 
@@ -43,7 +43,7 @@
     z-index: 1;
 }
 
-.ContentHeaderIcon {
+.CompanyHeaderIcon {
     width: 18px;
     height:18px;
     
@@ -57,7 +57,7 @@
     z-index: 1;
 }
 
-.ContentHeaderTitle{
+.CompanyHeaderTitle{
     font-family: "RixLightM";
     font-size: 20px;
     font-weight: 1000;
@@ -74,7 +74,7 @@
     color: #494040;
 }
 
-.ContentHeaderSubTitle{
+.CompanyHeaderSubTitle{
     font-family: "RixLightM";
     font-size:12px;
     font-weight: 600;
@@ -92,7 +92,7 @@
     color: #494040;
 }
 
-.ContentHeaderDropdownIcon {
+.CompanyHeaderDropdownIcon {
     margin-left:10px;
 
     width:20px;
@@ -103,7 +103,7 @@
     flex-direction: row;
 }
 
-.ContentBodyContainer {
+.CompanyBodyContainer {
     
     font-size:14px;
     font-weight: 1000;
@@ -119,27 +119,27 @@
     color: #494040;
 }
 
-.ContentBodyOrderButtonContainer {
-    float: right;
+.ProjectHeaderContainer {
+    margin-top: 8px;
 }
 
-.ContentProjectBodyTitle {
+.ProjectHeaderTitle {
     font-size: 16px;
     font-family: "RixLightM";
 }
 
-.ContentProjectBodySubTitle {
+.ProjectHeaderSubTitle {
     margin: 4px 0px 0px 8px;
     font-size: 12px;
 }
 
-.ContentProjectBodySentenceContainer {
+.ProjectBodyContainer {
     margin: 16px 0px 60px 36px;
     font-weight: 600;
     font-size: 13px;
 }
 
-.ContentProjectBodySentence {
+.ProjectBodyContentContainer {
     
     width:100%;
     height: fit-content;
@@ -161,6 +161,10 @@
 }
 
 .SentenceDepth4 {
-    padding-left: 60px;
-    
+    padding-left: 60px;   
+}
+
+.ui.tag.label:before {
+    width: 1.22em;
+    height: 1.22em;
 }
